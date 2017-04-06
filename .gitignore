@@ -1,4 +1,8 @@
-a.out
+*.out
+
+*.obj
+*.exe
+
 solution
 
 core
