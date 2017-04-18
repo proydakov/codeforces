@@ -1,0 +1,10 @@
+9
+pwd
+cd /home/vasya
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
