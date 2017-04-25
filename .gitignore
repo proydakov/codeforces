@@ -1,8 +1,11 @@
+big.txt
+
 *.out
 
 *.obj
 *.exe
 
 solution
+gen
 
 core
