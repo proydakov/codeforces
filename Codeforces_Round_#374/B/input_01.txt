@@ -1,0 +1,7 @@
+5 2
+cba
+abc
+bb1
+abC
+ABC
+abc
