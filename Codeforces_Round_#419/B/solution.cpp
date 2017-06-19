@@ -87,8 +87,7 @@ int main()
         --a;
         --b;
 
-        int counter = sum_rsq(rsq, 1, 0, osize, a, b);
-        std::cout << counter << std::endl;
+        std::cout << sum_rsq(rsq, 1, 0, osize, a, b) << "\n";
     }
 
     return 0;
