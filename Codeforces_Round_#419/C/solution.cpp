@@ -1,8 +1,8 @@
-#include <cmath>
 #include <limits>
 #include <vector>
 #include <numeric>
 #include <iostream>
+#include <algorithm>
 
 typedef std::vector<std::vector<int>> matrix_t;
 
@@ -34,36 +34,50 @@ int main()
         }
     }
 
-    // work w
     std::vector<int> min_w(w, 0);
-    for(int wi = 0; wi < w; wi++) {
-        int min = std::numeric_limits<int>::max();
-        for(int hi = 0; hi < h; hi++) {
-            min = std::min(min, matrix[hi][wi]);
-        }
-        min_w[wi] = min;
-    }
+    std::vector<int> min_h(h, 0);
 
-    for(int hi = 0; hi < h; hi++) {
+    // work w
+    auto lambda_w = [&matrix, &min_w, h, w](){
         for(int wi = 0; wi < w; wi++) {
-            matrix[hi][wi] -= min_w[wi];
+            int min = std::numeric_limits<int>::max();
+            for(int hi = 0; hi < h; hi++) {
+                min = std::min(min, matrix[hi][wi]);
+            }
+            min_w[wi] = min;
         }
-    }
+
+        for(int hi = 0; hi < h; hi++) {
+            for(int wi = 0; wi < w; wi++) {
+                matrix[hi][wi] -= min_w[wi];
+            }
+        }
+    };
 
     // work h
-    std::vector<int> min_h(h, 0);
-    for(int hi = 0; hi < h; hi++) {
-        int min = std::numeric_limits<int>::max();
-        for(int wi = 0; wi < w; wi++) {
-            min = std::min(min, matrix[hi][wi]);
+    auto lambda_h = [&matrix, &min_h, h, w](){
+        for(int hi = 0; hi < h; hi++) {
+            int min = std::numeric_limits<int>::max();
+            for(int wi = 0; wi < w; wi++) {
+                min = std::min(min, matrix[hi][wi]);
+            }
+            min_h[hi] = min;
         }
-        min_h[hi] = min;
-    }
 
-    for(int hi = 0; hi < h; hi++) {
-        for(int wi = 0; wi < w; wi++) {
-            matrix[hi][wi] -= min_h[hi];
+        for(int hi = 0; hi < h; hi++) {
+            for(int wi = 0; wi < w; wi++) {
+                matrix[hi][wi] -= min_h[hi];
+            }
         }
+    };
+
+    if(h < w) {
+        lambda_h();
+        lambda_w();
+    }
+    else {
+        lambda_w();
+        lambda_h();
     }
 
     // validate
