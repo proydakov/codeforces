@@ -1,4 +1,5 @@
 #include <cmath>
+#include <bitset>
 #include <vector>
 #include <iostream>
 
@@ -36,6 +37,8 @@ T sum_fenwick_tree(std::vector<T>& tree, int64_t l, int64_t r)
     return sum_fenwick_tree(tree, r) - sum_fenwick_tree(tree, l - 1);
 }
 
+enum { cache_max = 200000 };
+
 int main()
 {
     std::ios::sync_with_stdio();
@@ -45,8 +48,8 @@ int main()
     std::cin >> k;
     std::cin >> q;
 
-    std::vector<int> l_cache(200000, 0);
-    std::vector<int> r_cache(200000, 0);
+    std::vector<int> l_cache(cache_max, 0);
+    std::vector<int> r_cache(cache_max, 0);
 
     for(int64_t i = 0; i < n; i++) {
         int l; int r;
@@ -61,8 +64,8 @@ int main()
     }
 
     int accum = 0;
-    std::vector<int> cache(200000, 0);
-    for(int64_t i = 0; i < 200000; i++) {
+    std::vector<int> cache(cache_max, 0);
+    for(int64_t i = 0; i < cache_max; i++) {
         accum += l_cache[i];
 
         if(accum >= k) {
