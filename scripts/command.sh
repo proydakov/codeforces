@@ -11,6 +11,8 @@ cinit() {
     echo "int main()"                            >> $SOLUTION
     echo "{"                                     >> $SOLUTION
     echo "    std::ios::sync_with_stdio(false);" >> $SOLUTION
+    echo "    std::cin.tie(nullptr);"            >> $SOLUTION
+    echo "    std::cout.tie(nullptr);"           >> $SOLUTION
     echo ""                                      >> $SOLUTION
     echo ""                                      >> $SOLUTION
     echo ""                                      >> $SOLUTION
