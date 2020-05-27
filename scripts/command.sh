@@ -2,6 +2,14 @@ alias ccode="clang++ -std=c++17 -m32 -O2 solution.cpp -o solution"
 
 alias ccgen="clang++ -std=c++17 -O2 gen.cpp -o gen"
 
+cround() {
+    export ROUND="Codeforces_Round_#$1"
+    if [ ! -d "$ROUND" ]; then
+        mkdir $ROUND
+    fi
+    cd $ROUND
+}
+
 cinit() {
     export SOLUTION=solution.cpp
 
