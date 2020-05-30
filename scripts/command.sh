@@ -10,6 +10,14 @@ cround() {
     cd $ROUND
 }
 
+ctask() {
+    export TASK="$1"
+    if [ ! -d "$TASK" ]; then
+        mkdir $TASK
+    fi
+    cd $TASK
+}
+
 cinit() {
     export SOLUTION=solution.cpp
 
