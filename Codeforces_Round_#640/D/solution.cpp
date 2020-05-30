@@ -1,4 +1,3 @@
-#include <cstdint>
 #include <iostream>
 
 void solve()
@@ -23,31 +22,31 @@ void solve()
 
     while(alice_index <= bob_index)
     {
-        int current_delta = 0;
-        for(; current_delta <= last_delta && alice_index <= bob_index; bob_index--)
         {
-            current_delta += data[bob_index];
-        }
-        last_delta = current_delta;
-        bob_accumulator += current_delta;
-        turn++;
-
-        if (bob_index < alice_index)
-        {
-            break;
+            int current_delta = 0;
+            for(; current_delta <= last_delta && alice_index <= bob_index; bob_index--)
+            {
+                current_delta += data[bob_index];
+            }
+            last_delta = current_delta;
+            bob_accumulator += current_delta;
+            turn++;
         }
 
-        current_delta = 0;
-        for(; current_delta <= last_delta && alice_index <= bob_index; alice_index++)
+        if (alice_index <= bob_index)
         {
-            current_delta += data[alice_index];
+            int current_delta = 0;
+            for(; current_delta <= last_delta && alice_index <= bob_index; alice_index++)
+            {
+                current_delta += data[alice_index];
+            }
+            last_delta = current_delta;
+            alice_accumulator += current_delta;
+            turn++;
         }
-        last_delta = current_delta;
-        alice_accumulator += current_delta;
-        turn++;
     }
 
-    std::cout << turn << " " << alice_accumulator << " " << bob_accumulator << "\n";
+    std::cout << turn << ' ' << alice_accumulator << ' ' << bob_accumulator << '\n';
 }
 
 int main()
