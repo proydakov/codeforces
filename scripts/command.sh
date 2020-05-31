@@ -11,7 +11,7 @@ cround() {
 }
 
 ctask() {
-    export TASK="$1"
+    export TASK="${1^^}"
     if [ ! -d "$TASK" ]; then
         mkdir $TASK
     fi
