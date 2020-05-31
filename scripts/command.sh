@@ -35,12 +35,15 @@ cinit() {
     echo "    return 0;"                         >> $SOLUTION
     echo "}"                                     >> $SOLUTION
 
+    export LEN=1
     if ! [ -z $1 ]; then
-        for (( i=1; i<=$1; i++ ))
-	do
-            touch input_$i.txt
-	done;
+        export LEN=$1
     fi
+
+    for (( i=1; i<=$LEN; i++ ))
+    do
+        touch input_$i.txt
+    done;
 }
 
 cinit2() {
@@ -70,10 +73,13 @@ cinit2() {
     echo "    return 0;"                         >> $SOLUTION
     echo "}"                                     >> $SOLUTION
 
+    export LEN=1
     if ! [ -z $1 ]; then
-        for (( i=1; i<=$1; i++ ))
-    do
-            touch input_$i.txt
-    done;
+        export LEN=$1
     fi
+
+    for (( i=1; i<=$LEN; i++ ))
+    do
+        touch input_$i.txt
+    done;
 }
