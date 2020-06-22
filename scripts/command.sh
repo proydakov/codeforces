@@ -18,6 +18,20 @@ ctask() {
     cd $TASK
 }
 
+cgit() {
+    git add *.cpp
+    git add *.txt
+
+    PARENT=`readlink -fn ../../`
+    PARENT="$PARENT/"
+    CURRENT=`readlink -fn .`
+    COMMIT=`echo ${CURRENT/$PARRENT/}`
+    COMMIT="${COMMIT:1}"
+
+    git commit -m "Added $COMMIT"
+    git push
+}
+
 cinit() {
     export SOLUTION=solution.cpp
 
