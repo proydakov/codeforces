@@ -1,4 +1,5 @@
 big.txt
+.meta
 
 *.out
 
@@ -9,5 +10,3 @@ solution
 gen
 
 core
-
-Codeforces_Round_#353/D/
