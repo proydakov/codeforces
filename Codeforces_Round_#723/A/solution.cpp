@@ -13,13 +13,7 @@ void solve()
     {
         std::cin >> data[i];
     }
-
     std::sort(data.begin(), data.end());
-
-    for(size_t i = 0; i < 2 * n; i += 2)
-    {
-        std::swap(data[i], data[i + 1]);
-    }
 
     for(size_t i = 0; i < n; i++)
     {
