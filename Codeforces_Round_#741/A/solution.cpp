@@ -9,15 +9,9 @@ void solve()
     std::int64_t l, r;
     std::cin >> l >> r;
 
-    std::int64_t k = r / 2 + 1;
-    if (l <= k)
-    {
-        std::cout << r % k << '\n';
-    }
-    else
-    {
-        std::cout << r % l << '\n';
-    }    
+    auto k = r / 2 + 1;
+    auto o = l <= k ? k : l;
+    std::cout << r % o << '\n';
 }
 
 int main()
