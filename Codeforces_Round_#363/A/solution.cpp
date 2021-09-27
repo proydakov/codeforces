@@ -1,103 +1,59 @@
-#include <limits>
-#include <string>
 #include <vector>
+#include <limits>
 #include <cstdint>
 #include <iostream>
 #include <algorithm>
-#include <unordered_map>
 
-void step(std::vector<char> const& vec, size_t index, std::string prefix, size_t counter, std::unordered_map<std::string, size_t>& cache)
+enum
 {
-    if (index > vec.size())
-    {
-        return;
-    }
+    RELAX = 0,
+    CONT = 1,
+    GYM  = 2,
 
-    if (cache.find(prefix) != cache.end())
-    {
-        return;
-    }
-    else
-    {
-        cache[prefix] = counter;
-    }
-
-    auto const c = vec[index];
-    index++;
-
-    switch(c)
-    {
-        case '0':
-        {
-            auto new_prefix = prefix;
-            new_prefix.push_back('O');
-            step(vec, index, std::move(new_prefix), counter + 1, cache);
-        }
-            break;
-
-        case '1':
-        {
-            char last = 'O';
-            if (!prefix.empty())
-            {
-                last = prefix.back();
-            }
-            auto new_prefix = prefix;
-            new_prefix.push_back(last != 'C' ? 'C' : 'O');
-            step(vec, index, std::move(new_prefix), counter + last != 'C' ? 0 : 1, cache);
-        }
-            break;
-
-        case '2':
-        {
-            char last = 'O';
-            if (!prefix.empty())
-            {
-                last = prefix.back();
-            }
-            auto new_prefix = prefix;
-            new_prefix.push_back(last != 'S' ? 'S' : 'O');
-            step(vec, index, std::move(new_prefix), counter + last != 'S' ? 0 : 1, cache);
-        }
-            break;
-
-        case '3':
-        {
-            char last = 'O';
-            if (!prefix.empty())
-            {
-                last = prefix.back();
-            }
-
-        }
-    }
-}
+    SIZE
+};
 
 void solve()
 {
     size_t n;
     std::cin >> n;
 
-    std::vector<char> vec(n);
-    for(size_t i = 0; i < n; i++)
+    using day_t = int;
+    std::vector<day_t> days(n + 1);
+    for(size_t i = 1; i <= n; i++)
     {
-        std::cin >> vec[i];
-        vec[i] += '0';
+        std::cin >> days[i];
     }
 
-    std::unordered_map<std::string, size_t> cache;
-    step(vec, 0, prefix, 0, cache);
+    using cell_t = int;
+    std::vector<std::vector<cell_t>> dp(n + 1, std::vector<cell_t>(SIZE, 0));
 
-    size_t res = std::numeric_limits<size_t>::max();
-    for(auto const& [k, v] : cache)
+    for(size_t i = 1; i <= n; i++)
     {
-        if (v.size() == vec.size())
+        dp[i][RELAX] = std::min({dp[i - 1][RELAX], dp[i - 1][CONT], dp[i - 1][GYM]}) + 1;
+
+        auto const day = days[i];
+        if (day == 1 || day == 3)
         {
-            res = std::min(res, v);
+            dp[i][CONT] = std::min(dp[i - 1][RELAX], dp[i - 1][GYM]);
+        }
+        else
+        {
+            dp[i][CONT] = std::numeric_limits<cell_t>::max();
+
+        }
+
+        if (day == 2 || day == 3)
+        {
+            dp[i][GYM] = std::min(dp[i - 1][RELAX], dp[i - 1][CONT]);
+        }
+        else
+        {
+            dp[i][GYM] = std::numeric_limits<cell_t>::max();
         }
     }
 
-    std::cout << res << '\n';
+    std::cout << std::min({dp[n][RELAX], dp[n][CONT], dp[n][GYM]}) << '\n';
 }
 
 int main()
@@ -106,9 +62,7 @@ int main()
     std::cin.tie(nullptr);
     std::cout.tie(nullptr);
 
-    {
-        solve();
-    }
+    solve();
 
     return 0;
 }
