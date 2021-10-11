@@ -1,7 +1,6 @@
 #include <cmath>
 #include <cstdint>
 #include <iostream>
-#include <algorithm>
 #include <unordered_set>
 
 auto const g_map = [](){
