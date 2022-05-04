@@ -4,11 +4,10 @@
 
 void solve()
 {
-    std::unordered_map<int, int> table;
-
     size_t n;
     std::cin >> n;
 
+    std::unordered_map<int, int> table;
     table.reserve(n);
 
     for(size_t i = 0; i < n; i++)
