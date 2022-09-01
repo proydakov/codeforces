@@ -79,13 +79,14 @@ private:
     size_t m_columns;
 };
 
-bool is_valid_cell(matrix<int> const& map, int64_t x1, int64_t y1)
+template<typename Cond>
+bool is_valid_cell(matrix<int> const& map, int64_t x1, int64_t y1, Cond cond)
 {
     for(int64_t y = std::max(y1 - 1, int64_t(0)); y < std::min(y1 + 2, map.y()); y++)
     {
         for(int64_t x = std::max(x1 - 1, int64_t(0)); x < std::min(x1 + 2, map.x()); x++)
         {
-            if (map[{x, y}] == '*')
+            if (cond(map[{x, y}]))
             {
                 return false;
             }
@@ -172,7 +173,9 @@ bool solve(matrix<int>& map)
 
                 for(auto const& [x1, y1] : points)
                 {
-                    if (!is_valid_cell(map, x1, y1))
+                    if (!is_valid_cell(map, x1, y1, [](int c){
+                        return c == '*';
+                    }))
                     {
                         return false;
                     }
