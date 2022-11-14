@@ -11,7 +11,7 @@ template<typename T>
 struct matrix
 {
     matrix(size_t rows, size_t columns)
-        : m_map(rows, std::vector<int>(columns, T{}))
+        : m_map(rows, std::vector<T>(columns, T{}))
         , m_rows(rows)
         , m_columns(columns)
     {
@@ -78,6 +78,22 @@ private:
     size_t m_rows;
     size_t m_columns;
 };
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, matrix<T> const& m)
+{
+
+    for(int64_t y = 0; y < m.y(); y++)
+    {
+        for(int64_t x = 0; x < m.x(); x++)
+        {
+            const auto& c = m[{x, y}];
+            os << c;
+        }
+        os << '\n';
+    }
+    return os;
+}
 
 template<typename T, typename Cond>
 bool is_valid_cell(matrix<T> const& map, int64_t x1, int64_t y1, Cond cond)
